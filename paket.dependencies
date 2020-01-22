@@ -1,78 +1,27 @@
-group Server
-    source https://api.nuget.org/v3/index.json
-    framework: netcoreapp3.0
-    storage: none
-
-    nuget FSharp.Core
-//#if (server == "suave")
-    nuget Suave
-//#elseif (server == "giraffe")
-    nuget Giraffe
-//#elseif (server == "saturn")
-    nuget Saturn
-//#endif
-//#if (bridge && server == "suave")
-    nuget Elmish.Bridge.Suave ~> 3
-//#elseif (bridge && server != "suave")
-    nuget Elmish.Bridge.Giraffe ~> 3
-//#endif
-//#if (!remoting && server != "suave")
-    nuget Thoth.Json.Giraffe
-//#elseif (!remoting && server == "suave")
-    nuget Thoth.Json.Net
-//#elseif (remoting && server == "suave")
-    nuget Fable.Remoting.Suave ~> 3
-//#elseif (remoting && server != "suave")
-    nuget Fable.Remoting.Giraffe ~> 3
-//#endif
-//#if (deploy == "azure")
-    nuget Microsoft.ApplicationInsights.AspNetCore
-    nuget WindowsAzure.Storage
-//#endif
-
-group Client
-    source https://api.nuget.org/v3/index.json
-    framework: netstandard2.0
-    storage: none
-
-    nuget Fable.Core ~> 3
-    nuget Fable.Elmish ~> 3
-    nuget Fable.Elmish.Debugger ~> 3
-    nuget Fable.Elmish.HMR ~> 4
-    nuget Fable.Elmish.React ~> 3
-//#if (streams)
-    nuget Fable.Elmish.Streams ~> 3
-    nuget FSharp.Control.AsyncRx ~> 1.0.0
-//#endif
-//#if (!remoting)
-    nuget Thoth.Fetch ~> 1
-//#endif
-    nuget Fable.React ~> 5
-//#if (remoting)
-    nuget Fable.Remoting.Client ~> 5
-//#endif
-//#if (bridge)
-    nuget Elmish.Bridge.Client ~> 3
-//#endif
-//#if (layout != "none")
-    nuget Fulma ~> 2
-    nuget Fable.FontAwesome.Free ~> 2
-//#endif
+github fable-compiler/webpack-config-template webpack.config.js
 
 group Build
-    source https://api.nuget.org/v3/index.json
-    framework: netstandard2.0
     storage: none
+    source https://api.nuget.org/v3/index.json
 
-    nuget FSharp.Core
+    nuget FSharp.Core 4.3.4 // https://github.com/fsharp/FAKE/issues/2001
     nuget Fake.Core.ReleaseNotes
     nuget Fake.Core.Target
     nuget Fake.DotNet.Cli
+    nuget Fake.DotNet.Paket
     nuget Fake.IO.FileSystem
-//#if (deploy == "azure")
-    nuget Fake.Core.Environment
-    nuget Fake.Core.Trace
-    nuget Fake.IO.Zip
-    github CompositionalIT/fshelpers src/FsHelpers/ArmHelper/ArmHelper.fs
-//#endif
+    nuget Fake.Tools.Git
 
+group Tests
+    framework: netcoreapp3.0
+    storage: none
+    source https://api.nuget.org/v3/index.json
+
+    nuget System.Net.Http
+
+    nuget Expecto
+    nuget Expecto.FsCheck
+    nuget Expecto.TestResults
+    nuget Fake.Core.Process
+    nuget Fake.DotNet.Cli
+    nuget FSharp.Core
